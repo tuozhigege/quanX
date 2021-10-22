@@ -1,0 +1,45 @@
+/**
+ * @fileoverview Template to compose HTTP reqeuest.
+ * 速归云签到 自用
+ */
+
+const url = `https://m.ok3.icu/api_mweb/user/checkin`;
+const method = `PUT`;
+const headers = {
+'Accept' : `application/json, text/plain, */*`,
+'Origin' : `https://m.ok3.icu`,
+'Connection' : `keep-alive`,
+'Cookie' : `email=tuozhigege%40gmail.com; expire_in=1637519589; ip=f1716abc2c36ec790a0572587541a541; key=d2171285e4ebf1c4521602f3e6a8b1f70e5f2e4e4d9c8; new_panel=1; uid=273922`,
+'Referer' : `https://m.ok3.icu/m/home`,
+'Host' : `m.ok3.icu`,
+'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 15_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1`,
+'Accept-Language' : `zh-CN,zh-Hans;q=0.9`,
+'Accept-Encoding' : `gzip, deflate, br`,
+'AuthorizationMweb' : `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBpcmUiOjE2MzQ5MzExODksInVpZCI6MjczOTIyLCJrZXkiOiIwNTVlYWQyZThiMDdhOWFkN2Q2ZWQwYWFiOWE3MTVjMWJkZWE1YmZjYjJhZmFlMiJ9.PlLW6Wn0QW6kC--de9UuL-WQx80dNUEkE6J0fmTExxE`
+};
+const body = ``;
+
+const myRequest = {
+    url: url,
+    method: method,
+    headers: headers,
+    body: body
+};
+
+var GB2312UnicodeConverter = { 
+    ToUnicode: function (str) {
+      return escape(str).toLocaleLowerCase().replace(/%u/gi, '\\u');
+      } 
+    , ToGB2312: function (str) {
+        return unescape(str.replace(/\\u/gi, '%u'));
+      } 
+  };
+
+$task.fetch(myRequest).then(response => {
+    console.log(GB2312UnicodeConverter.ToGB2312 (response.body));
+
+    $done();
+}, reason => {
+    console.log(reason.error);
+    $done();
+});
